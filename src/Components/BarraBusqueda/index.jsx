@@ -1,6 +1,10 @@
 import React from 'react'
+import { UseOpenModal } from '../CustomHook/OpenModal';
+import { SearchCity } from '../SearchCity';
 
-export const Sidebar = ({onClose}) => {
+export const Sidebar = () => {
+  const {openMenu, setOpenMenu,onClose } = UseOpenModal(true);
+
   return (
     <aside id='modal' className={`absolute w-full min-h-screen h-full  flex-shrink-0 ${!openMenu && 'hidden'}`}>
             <div className="border-r-2  w-full h-full bg-[#1E213A] dark:border-none">
@@ -22,14 +26,8 @@ export const Sidebar = ({onClose}) => {
                 <button className="bg-[#3C47E9] disabled:bg-[#5d64ca] text-silver h-[48px] w-[86px] font-semibold text-base text-[#E7E7EB]">Search</button>
               </div>
               <ul className="flex flex-col text-silver mr-5 ml-5">
-                <li className="group cursor-pointer w-full h-[64px] flex flex-row px-3 justify-between items-center hover:border-[1px]  duration-100  border-[#616475] text-[#E7E7EB]"> <p>London</p>
-                  <i className='group cursor-pointer w-full h-[64px] flex flex-row px-3 justify-between items-center text-silver hover:border-[1px]  duration-100  border-[#616475]'>
-                    US
-                  </i>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                  </svg>
-                </li>
+                <SearchCity City={'London'} Country={'US'} />
+                <SearchCity City={'Madrid'} Country={'Barcelona'} />
               </ul>
             </div>
         </aside>
