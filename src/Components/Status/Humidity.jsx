@@ -11,7 +11,7 @@ export const Humidity = ({porcentaje}) => {
               <span>100%</span>
           </div>
           <div className="w-full h-[8px] bg-silver rounded-[80px]">    
-              <div className="bg-yellow-400 h-full bg-[#FFEC65] rounded-[80px]" style={{width: 250}}></div>
+              <div className="bg-yellow-400 h-full bg-[#FFEC65] rounded-[80px] md:h-full" style={{porcentaje}}></div>
           </div>                
       </div>
   )

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 
-export const UseOpenModal = (inicial) => {
+const useModalSearch = (inicial) => {
 
     const  [openMenu, setOpenMenu] = useState(inicial)
 
-    const onClose = ()=>{
+    function onClose(){
         setOpenMenu(false)
     }
 
-    const onOpen = ()=>{
+    function onOpen(){        
         setOpenMenu(true)
     }
     
@@ -20,8 +20,9 @@ export const UseOpenModal = (inicial) => {
 
     return {
         openMenu,
-        setOpenMenu,
         onClose,
         onOpen
     };
-}
+};
+
+export default useModalSearch;
