@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-export const Weather = ({icon, temp, description, location}) => {
+export const Weather = ({icon, temp, description, date, location}) => {
 
   /* const {location}  = useContext(useApiData); */
 
@@ -13,30 +13,21 @@ export const Weather = ({icon, temp, description, location}) => {
     return `images/${value}.png`
   } */
 
-  
-  function conversationDay(){
-       return '10 May'
-  }
 
   useEffect(()=>{
-    
-    
-    conversationDay()
-
+    console.log('icono',icon);
   },[])
 
   return (
     <>     
       <div className="flex justify-center mt-[46px]  mb-[10px] 2xl:mt-[76px] 2xl:self-center" >
-         <img src={icon} alt="weather" width="150" height="174"/> 
+         <img src={'./imagenes/'+icon+'.png'} alt="weather" width="150" height="174"/> 
       </div>
       <div className="text-center 2xl:self-center">
             <h1 className="text-silver font-medium text-[120px] text-[#E7E7EB]">{temp}<span className="text-[] text-5xl duration-700">°C</span></h1> 
             <h5 className="text-2xl text-[#A09FB1] font-semibold mt-[13px] md:mt-[13px] capitalize">{description}</h5>    
           <div className="flex flex-row gap-[10px] justify-center text-[#88869D] text-lg mt-[40px] mb-[33px]">
-              <p>Today</p>
-              <p>-</p>
-              <p>{conversationDay}</p>
+              <p>{date}</p>
             </div>
             <div className="flex flex-row gap-2 justify-center text-[#88869D] mb-[40px] ">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -48,5 +39,3 @@ export const Weather = ({icon, temp, description, location}) => {
     </>
   )
 }
-
-export default Weather
