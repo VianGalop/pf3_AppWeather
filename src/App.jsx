@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Header } from "./Components/Header"
 import { Weather } from "./Components/Weather";
-import { DaysWather } from "./Components/DaysWeather";
 import { Medidas } from "./Components/Medidas/Index";
 import { Status } from "./Components/Status/Status";
 import { Humidity } from "./Components/Status/Humidity";
@@ -11,16 +10,14 @@ import { useGeolocation } from "./Components/CustomHook/useGeolocation";
 import useModalSearch from "./Components/CustomHook/useModalSearch";
 import { Sidebar } from "./Components/BarraBusqueda";
 import { ApiDataContext } from "./Components/Context/useContextData";
+import { Days } from "./Components/DaysWeather/Days";
 
 export default function App() {
 
   const {getGeoLocation} = useGeolocation({});
   const {openMenu, onClose, onOpen } = useModalSearch(true);
-  const {getCity, getWeatherCity, dataCity, dataCoord, dataWeather,conversationDay} = useSearchCity() 
-/* 
-   const { dateToday, location} = useContext(ApiDataContext);
-   console.log('otros datos', dateToday, location); 
-*/
+  const {getCity, getWeatherCity, dataCity, dataCoord, dataWeather} = useSearchCity() 
+
    const { 
    urlIcon, 
    temperature,
@@ -32,11 +29,11 @@ export default function App() {
    humidity, 
    airPressure,
    weatherDays, 
-   apiData } = useContext(ApiDataContext);
+   } = useContext(ApiDataContext);
   /*  console.log('apiDataAPP', apiData); */
    
   useEffect(()=>{
-    console.log('weatherDays',   weatherDays );
+
   }, [ urlIcon, temperature, descrip, dateToday, location, windStatus, weatherDays,visibility, humidity, airPressure, ])
 
   /* useEffect(()=>{
@@ -50,11 +47,16 @@ export default function App() {
           <Header getGeoLocation={getGeoLocation} onOpen={onOpen}/>
           <Sidebar openMenu={openMenu} onClose={onClose} getCity= {getCity} getWeatherCity={getWeatherCity} dataCity={dataCity}/>
           <Weather icon={urlIcon} temp={temperature} description={descrip} date={dateToday}location={location} /> 
-            
         </div>             
         <div className="w-full flex flex-col  bg-[#100E1D] md:px-[10px] md:w-full ">
           <Medidas/>
-          <DaysWather weatherDays={weatherDays}/>          
+          <div className="px-10 py-9 grid grid-cols-2 gap-[22px] lg:grid-cols-4 xl:grid-cols-5 xl:px-0">
+            {
+            weatherDays.map((item, key) =>
+              <Days key={key} day={item.fecha} urlImg={item.icon} gradMin={item.temp_min} gradMax={item.temp_max} />
+            )              
+            }            
+          </div>          
           <div className="grid grid-cols-1  gap-6 px-10 p-[22px]  md:grid-cols-2 mt-6">
             <Status cantidad={windStatus} deg = {windStatus} medida={'mph'}/>
             <Humidity porcentaje={humidity}/>
@@ -67,4 +69,3 @@ export default function App() {
     </>
   )
 }
-

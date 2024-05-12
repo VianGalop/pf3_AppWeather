@@ -13,9 +13,7 @@ export const Header = ({getGeoLocation, onOpen}) => {
     },[openMenu, onClose, onOpen])
  */
 
-  
-
-  return (
+    return (
     <>
       <div className="flex flex-row justify-between px-7 xl:justify-between">
         <button

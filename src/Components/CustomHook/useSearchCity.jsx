@@ -36,17 +36,6 @@ export const useSearchCity = () => {
     }
   } 
 
-  function temperatureConversation(){
-    return Math.trunc(dataWeather.temp - 273.15) 
-  }
-    
-
-  function conversationDay(oldDate) {
-    let date = new Date(oldDate * 1000)
-    let date2 = +date.getDay()+ '' +date.getMonth()
-    console.log('oldDate'+ oldDate+ 'fecha ', date2);
-    return date2 
-  }
 
   useEffect(()=>{    
   },[dataWeather, dataWeather, setdataWeather])
@@ -57,8 +46,6 @@ export const useSearchCity = () => {
     dataCity, 
     dataCoord, 
     dataWeather,
-    temperatureConversation,
-    conversationDay
 
   }
 }

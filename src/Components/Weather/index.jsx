@@ -15,13 +15,14 @@ export const Weather = ({icon, temp, description, date, location}) => {
 
 
   useEffect(()=>{
-    console.log('icono',icon);
-  },[])
+    console.log('icono','./imagenes/'+icon+'.png');
+  },[icon])
 
   return (
-    <>     
-      <div className="flex justify-center mt-[46px]  mb-[10px] 2xl:mt-[76px] 2xl:self-center" >
-         <img src={'./imagenes/'+icon+'.png'} alt="weather" width="150" height="174"/> 
+    <> 
+      
+      <div className="flex justify-center mt-[46px]  mb-[10px] h-[150px] px-2 mx-auto 2xl:mt-[76px] 2xl:self-center border" > 
+           <img src={'./images/'+icon+'.png'} alt="weather" width="150" height="174"/> 
       </div>
       <div className="text-center 2xl:self-center">
             <h1 className="text-silver font-medium text-[120px] text-[#E7E7EB]">{temp}<span className="text-[] text-5xl duration-700">°C</span></h1> 
