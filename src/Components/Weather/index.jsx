@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-export const Weather = ({icon, temp, description, date, location}) => {
+export const Weather = ({icon, temp, description, date, location, tempLetter}) => {
 
 
   useEffect(()=>{
@@ -9,15 +9,16 @@ export const Weather = ({icon, temp, description, date, location}) => {
 
   return (
     <> 
-      
-      <div className="flex justify-center mt-[46px]  mb-[10px] h-[150px] px-2 mx-auto 2xl:mt-[76px] 2xl:self-center " > 
+      <div className="flex justify-center mt-[46px]  mb-[10px] h-[150px] px-2 mx-auto 2xl:mt-[76px] 2xl:self-center" > 
            <img src={'./images/'+icon+'.png'} alt="weather" width="150" height="174"/> 
       </div>
       <div className="text-center 2xl:self-center">
             <h1 className="text-silver font-medium text-[120px] text-[#E7E7EB]">{temp}<span className="text-[] text-5xl duration-700">°C</span></h1> 
             <h5 className="text-2xl text-[#A09FB1] font-semibold mt-[13px] md:mt-[13px] capitalize">{description}</h5>    
           <div className="flex flex-row gap-[10px] justify-center text-[#88869D] text-lg mt-[40px] mb-[33px]">
-              <p>{date}</p>
+            <p>Today</p>
+            <p>-</p> 
+            <p>{date}</p>
             </div>
             <div className="flex flex-row gap-2 justify-center text-[#88869D] mb-[40px] ">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">

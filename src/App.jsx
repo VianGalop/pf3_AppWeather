@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Header } from "./Components/Header"
 import { Weather } from "./Components/Weather";
-import { Medidas } from "./Components/Medidas/Index";
+import { Metric } from "./Components/Metric/Index";
 import { Status } from "./Components/Status/Status";
 import { Humidity } from "./Components/Status/Humidity";
 import { VisibilityAir } from "./Components/Status/VisibilityAir";
@@ -14,11 +14,7 @@ import { Days } from "./Components/DaysWeather/Days";
 
 export default function App() {
 
-    const {openMenu, onClose, onOpen } = useModalSearch(true);
-
-   /*  const {getGeoLocation} = useGeolocation({}); */
-  
-  /* const {getCity, getWeatherCity, dataCity, dataCoord, dataWeather} = useSearchCity(); */
+  const {openMenu, onClose, onOpen } = useModalSearch(true);
 
    const { 
    urlIcon, 
@@ -34,10 +30,12 @@ export default function App() {
    getGeoLocation,
    getCity,
    getWeatherCity,
-   setDataCoord,
-   dataCity,  
-   dataWeather,
+   dataCity, 
    searchData,
+   tempLetter,
+   celsius,
+   changefahrenheit,
+
    } = useContext(ApiDataContext);
   /*  console.log('apiDataAPP', apiData); */
    
@@ -55,10 +53,10 @@ export default function App() {
         <div className=" 2xl:w-[500px] 2xl:flex-shrink-0">
           <Header getGeoLocation={getGeoLocation} onOpen={onOpen}/>
           <Sidebar openMenu={openMenu} onClose={onClose} getCity= {getCity} getWeatherCity={getWeatherCity} dataCity={dataCity} searchData={searchData}/>
-          <Weather icon={urlIcon} temp={temperature} description={descrip} date={dateToday}location={location} /> 
+          <Weather icon={urlIcon} temp={temperature} description={descrip} date={dateToday}location={location} tempLetter={tempLetter}/> 
         </div>             
         <div className="w-full flex flex-col  bg-[#100E1D] md:px-[10px] md:w-full ">
-          <Medidas/>
+          <Metric celsius={celsius} fahrenheit={changefahrenheit}/>
           <div className="px-10 py-9 grid grid-cols-2 gap-[22px] lg:grid-cols-4 xl:grid-cols-5 xl:px-0">
             {
             weatherDays.map((item, key) =>

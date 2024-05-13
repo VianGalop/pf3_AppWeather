@@ -32,8 +32,9 @@ export const ApiDataProvider = ({children }) => {
 
     const [weatherCity, setWeatherCity] = useState('')
     const [dataCity, setDataCity] = useState({})
-    const [dataWeather, setdataWeather] = useState({})
+   /*  const [dataWeather, setdataWeather] = useState({}) */
     const [bandera,setBandera] = useState(0)
+    const [tempLetter, setTempLetter] = useState('C')
 
     // Busca los datos del clima en general
     useEffect(() => {  
@@ -63,6 +64,7 @@ export const ApiDataProvider = ({children }) => {
         setHumidity(jsonData.main.humidity)
         setVisibility(jsonData.visibility)
         setAirPressure(jsonData.main.pressure)
+
         }catch(error){
             console.log(error);
         }
@@ -186,6 +188,11 @@ export const ApiDataProvider = ({children }) => {
       return newDate
     }
 
+    function tempKelFahren(date){
+      let newDate = Math.trunc(date - 459)
+      return newDate
+    }
+
     function formIcon(icon){
       let value = icon.slice(0, icon.length - 1)
       return value
@@ -196,6 +203,23 @@ export const ApiDataProvider = ({children }) => {
       return fecha.getDate()
     }
    
+    function celsius(){
+      console.log('celsius');
+    }
+    
+    function changefahrenheit(){
+      /* setTemperature(fahrenheit(temperature))
+      setTempLetter('F') */
+      console.log('fahrenheit', temperature);
+    }
+
+    function fahrenheit(valor){
+       /* (grados Fahrenheit − 32) × 5/9 */
+     /*  let res = ((valor*9)/5) +32;
+      return res; */
+    }
+
+    
 
     return (
     <ApiDataContext.Provider value=
@@ -215,8 +239,10 @@ export const ApiDataProvider = ({children }) => {
       getCity,
       getWeatherCity,
       dataCity, 
-      dataWeather,
-      searchData,     
+      searchData,
+      tempLetter,
+      celsius,
+      changefahrenheit,     
       }
     }>
         {children}        
