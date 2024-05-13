@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { SearchCity } from '../SearchCity';
 import { useSearchCity } from '../CustomHook/useSearchCity';
 
-export const Sidebar = ({openMenu, onClose, getCity, getWeatherCity, dataCity}) => {
+export const Sidebar = ({openMenu, onClose, getCity, getWeatherCity, dataCity, searchData}) => {
 
   /* const {getCity, getWeatherCity, dataCity, setDataCity } = useSearchCity()
 
@@ -31,7 +31,7 @@ export const Sidebar = ({openMenu, onClose, getCity, getWeatherCity, dataCity}) 
                 <button type='submit' onClick={getWeatherCity} className="bg-[#3C47E9] disabled:bg-[#5d64ca] text-silver h-[48px] w-[86px] font-semibold text-base text-[#E7E7EB]" >Search</button>
               </div>
               <ul className="flex flex-col text-silver mr-5 ml-5"> 
-                <SearchCity City={dataCity.name} Country={dataCity.country} id={dataCity.id} />
+                {<SearchCity City={dataCity.name} Country={dataCity.country} id={dataCity.id} searchData={searchData}/>}
               </ul>
             </div>
         </aside>

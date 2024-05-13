@@ -6,18 +6,12 @@ import { Sidebar } from "../BarraBusqueda";
 
 export const Header = ({getGeoLocation, onOpen}) => {
 
- /*  const {openMenu, onClose, onOpen } = useModalSearch(true); */
-  /* const { getGeoLocation} = useGeolocation({}); */
-  
-/*     useEffect(()=>{
-    },[openMenu, onClose, onOpen])
- */
 
     return (
     <>
-      <div className="flex flex-row justify-between px-7 xl:justify-between">
+      <div className="flex flex-row justify-between px-7 mt-6 xl:justify-between">
         <button
-          className="bg-[#6E707A] w-[165px] h-[40px]  hover:bg-slate-400  text-base px-[18px] y-[11px] text-zinc-200 "
+          className="bg-[#6E707A] w-[165px] h-[50px]  hover:bg-slate-400  text-base px-[18px] y-[11px] text-zinc-200 "
           onClick={onOpen} >            
           Search for places
         </button>

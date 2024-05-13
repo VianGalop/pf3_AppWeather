@@ -14,12 +14,7 @@ export const useSearchCity = () => {
       console.log(jsonResponse);
       setDataCoord(jsonResponse.coord);
       setDataCity({id:jsonResponse.id ,name: jsonResponse.name, country:jsonResponse.sys.country});
-      setdataWeather({
-          icon: jsonResponse.weather[0].icon,
-          temp:  Math.trunc(dataWeather.temp - 273.15),
-          descript:jsonResponse.weather[0].description,
-          date: new Date(jsonResponse.dt * 1000)
-      })
+      
   }
 
   
@@ -38,11 +33,12 @@ export const useSearchCity = () => {
 
 
   useEffect(()=>{    
-  },[dataWeather, dataWeather, setdataWeather])
+  },[setdataWeather])
 
   return{
     getCity,
     getWeatherCity,
+    setDataCoord,
     dataCity, 
     dataCoord, 
     dataWeather,

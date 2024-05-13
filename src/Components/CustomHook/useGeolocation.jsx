@@ -7,8 +7,6 @@ export const useGeolocation = (valor) => {
         timeout: 5000,
         maximunAge: 0,
     }
-    const [latitude, setLatitud] = useState()
-    const [longitud, setLongitud] = useState()
 
     function success(pos){
         const crd = pos.coords;        
@@ -17,8 +15,6 @@ export const useGeolocation = (valor) => {
         console.log(`Latitud:${crd.latitude}`);
         console.log(`Longitud:${crd.longitude}`);
         console.log(`Mas o Menos:${crd.accuracy} metros.`);
-        setLatitud(crd.latitude)
-        setLongitud(crd.longitud)
     }
   
     function error(err){
@@ -33,7 +29,7 @@ export const useGeolocation = (valor) => {
         const rs = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${geolocation.latitude}&lon=${geolocation.longitud}&appid=3ca65afd6685b30d2cb2ae1195983749`)
         const jsonResponse = await rs.json();
         console.log(geolocation);
-        console.log(jsonResponse);
+        
     }
   
     useEffect(()=>{
@@ -44,6 +40,6 @@ export const useGeolocation = (valor) => {
   
 
   return {
-    getGeoLocation,
+    getGeoLocation
   }
 }

@@ -4,10 +4,12 @@ import React,{ createContext, useContext, useEffect, useState } from "react";
 const ApiDataContext = createContext();
 // Un componente proveedor que va a contener los datos de la API
 export const ApiDataProvider = ({children }) => {
-    const [coord, setCoord] = useState({
-      lat:19.4372,
-      log:-99.0369,
-    })
+    /* const [coord, setCoord] = useState({
+      lat:-10,
+      long:-55,
+    }) */
+    const [lat,setLat] = useState(-10)
+    const [long,setLong] = useState(-55)
     const [dataLocalStorage, setDataLocalStorage] = useState(null) 
     const [apiData, setApiData] = useState([]);
     const [urlIcon, setUrlIcon] = useState('')
@@ -21,19 +23,32 @@ export const ApiDataProvider = ({children }) => {
     const [airPressure, setAirPressure] = useState('')
     const [weatherDays,setWeatherDays] = useState([])
 
-    // Simulando una llamada a la API */
-    useEffect(() => {      
+    const [geolocation, setGeolocation] = useState({})
+    const options ={
+        enableHighAccuracy:true,
+        timeout: 5000,
+        maximunAge: 0,
+    }
+
+    const [weatherCity, setWeatherCity] = useState('')
+    const [dataCity, setDataCity] = useState({})
+    const [dataWeather, setdataWeather] = useState({})
+    const [bandera,setBandera] = useState(0)
+
+    // Busca los datos del clima en general
+    useEffect(() => {  
+
       const fetchData = async() =>{
         try{
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coord.lat}&lon=${coord.log}&appid=e1ecdc6106476e67ef1dc6d8fadd18e6`)
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=e1ecdc6106476e67ef1dc6d8fadd18e6`)
         const jsonData = await response.json()
         console.log(jsonData);
 
         //Enviando datos al localStorage
         if(dataLocalStorage === null){
-            localStorage.setItem('location',JSON.stringify(coord))          
+            localStorage.setItem('location',JSON.stringify({lat,long}))          
         }else{
-          localStorage.setItem('location',JSON.stringify(coord))
+          localStorage.setItem('location',JSON.stringify({lat,long}))
           setApiData(jsonData)
         } 
         //recupernado de localStorage
@@ -53,13 +68,23 @@ export const ApiDataProvider = ({children }) => {
         }
       }
 
-      fetchData()      
-    }, []);
+      fetchData()
+      if(geolocation.latitude){
+        fetchData()
+      }
 
+      if(bandera != 0){
+        fetchData()
+        setBandera(0)
+      }
+      
+    }, [geolocation,bandera]);
+
+    // Busca el clima de los dias de la semana
     useEffect(()=>{
       const fetchDataDays = async()=>{
         try{//llamada Api
-          const respDays = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=19.4372&lon=-99.0369&appid=e1ecdc6106476e67ef1dc6d8fadd18e6`)
+          const respDays = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=e1ecdc6106476e67ef1dc6d8fadd18e6`)
           const arrayDays = await respDays.json() //fecha hoy del sistema
           
           let today = new Date().getDate()
@@ -88,10 +113,66 @@ export const ApiDataProvider = ({children }) => {
         }
       }
       fetchDataDays()
-      
-    },[])
+
+      if(geolocation.latitude){
+        fetchDataDays()
+      }
+
+      if(bandera != 0){
+        fetchDataDays()
+        setBandera(0)
+      }  
+    },[setLat,setLong, geolocation, bandera])
   
-    
+
+    //Busca informacion de las ciudades 
+    const getDataCity = async () =>{
+      const rs = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=e1ecdc6106476e67ef1dc6d8fadd18e6`)
+      const jsonResponse = await rs.json();
+      console.log(jsonResponse);
+      setDataCity({id:jsonResponse.id,latCity:jsonResponse.coord.lat,longCity:jsonResponse.coord.lon,name: jsonResponse.name, country:jsonResponse.sys.country});
+     
+  } 
+
+  function searchData() {
+    setLat(dataCity.latCity)
+    setLong(dataCity.longCity)
+    setBandera(1)
+    console.log('search',lat,long);
+  }
+
+  function getCity(e){
+    setWeatherCity(e.target.value)
+  }
+
+  function getWeatherCity(){
+    if(weatherCity){
+      getDataCity()
+    }else{
+      console.log('vacio');
+    }
+  } 
+
+    function success(pos){
+      const crd = pos.coords;        
+      setGeolocation({ latitude: crd.latitude, longitude: crd.longitude})
+     /*  console.log('tu ubicacion actuales:');
+      console.log(`Latitud:${crd.latitude}`);
+      console.log(`Longitud:${crd.longitude}`);
+      console.log(`Mas o Menos:${crd.accuracy} metros.`); */
+      setLat(crd.latitude)
+      setLong(crd.longitude)
+  }
+
+  function error(err){
+      console.warn(`Error(${err.code}):${err.message}`);
+  }
+
+  function getGeoLocation(){
+      navigator.geolocation.getCurrentPosition(success,error,options)
+  }
+
+
     function dateFormat(date){
       const day = new Date(date*1000);
       const options = { weekday: 'long', day: 'numeric', month: 'short' };
@@ -130,6 +211,12 @@ export const ApiDataProvider = ({children }) => {
       humidity, 
       airPressure,
       weatherDays,
+      getGeoLocation,
+      getCity,
+      getWeatherCity,
+      dataCity, 
+      dataWeather,
+      searchData,     
       }
     }>
         {children}        

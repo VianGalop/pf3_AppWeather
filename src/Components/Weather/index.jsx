@@ -2,17 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 
 export const Weather = ({icon, temp, description, date, location}) => {
 
-  /* const {location}  = useContext(useApiData); */
-
- /*  console.log('apiDataLocal', apiData);
-  console.log('NAme', apiData.name); */
-
- /*  const RenderImg = (icon ) => {    
-    let value = icon.slice(0, icon.length - 1)
-
-    return `images/${value}.png`
-  } */
-
 
   useEffect(()=>{
     console.log('icono','./imagenes/'+icon+'.png');
@@ -21,7 +10,7 @@ export const Weather = ({icon, temp, description, date, location}) => {
   return (
     <> 
       
-      <div className="flex justify-center mt-[46px]  mb-[10px] h-[150px] px-2 mx-auto 2xl:mt-[76px] 2xl:self-center border" > 
+      <div className="flex justify-center mt-[46px]  mb-[10px] h-[150px] px-2 mx-auto 2xl:mt-[76px] 2xl:self-center " > 
            <img src={'./images/'+icon+'.png'} alt="weather" width="150" height="174"/> 
       </div>
       <div className="text-center 2xl:self-center">
